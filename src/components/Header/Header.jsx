@@ -1,10 +1,11 @@
 import React from "react"
 import { Autocomplete } from "@react-google-maps/api"
-import { AppBar, Toolbar, InputBase, Box, Typography } from "@material-ui/core"
-import SearchIcon from "@material-ui/icons/SearchRounded"
+import { AppBar, Toolbar, Typography, InputBase, Box } from "@material-ui/core"
+import SearchIcon from "@material-ui/icons/Search"
+
 import useStyles from "./style.js"
 
-const Header = () => {
+const Header = ({ onPlaceChanged, onLoad }) => {
 	const classes = useStyles()
 
 	return (
@@ -13,21 +14,21 @@ const Header = () => {
 				<Typography variant='h5' className={classes.title}>
 					Wander Assist
 				</Typography>
-				<Box className={classes.box}>
+				<Box display='flex'>
 					<Typography variant='h6' className={classes.title}>
 						Explore new places
 					</Typography>
-					{/* <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}> */}
-					<div className={classes.search}>
-						<div className={classes.searchIcon}>
-							<SearchIcon />
+					<Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
+						<div className={classes.search}>
+							<div className={classes.searchIcon}>
+								<SearchIcon />
+							</div>
+							<InputBase
+								placeholder='Search…'
+								classes={{ root: classes.inputRoot, input: classes.inputInput }}
+							/>
 						</div>
-						<InputBase
-							placeholder='Search…'
-							classes={{ root: classes.inputRoot, input: classes.inputInput }}
-						/>
-					</div>
-					{/* </Autocomplete> */}
+					</Autocomplete>
 				</Box>
 			</Toolbar>
 		</AppBar>

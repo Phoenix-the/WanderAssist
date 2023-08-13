@@ -7,9 +7,6 @@ export default makeStyles((theme) => ({
 			display: "block",
 		},
 	},
-	box: {
-		display: "flex",
-	},
 	search: {
 		position: "relative",
 		borderRadius: theme.shape.borderRadius,

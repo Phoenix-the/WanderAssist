@@ -15,7 +15,9 @@ import Rating from "@material-ui/lab/Rating"
 
 import useStyles from "./style.js"
 
-const PlaceDetails = ({ place }) => {
+const PlaceDetails = ({ place, selected, refProp }) => {
+	if (selected)
+		refProp?.current?.scrollIntoView({ behavior: "smooth", block: "start" })
 	const classes = useStyles()
 
 	return (
@@ -33,14 +35,20 @@ const PlaceDetails = ({ place }) => {
 				<Typography gutterBottom variant='h5'>
 					{place.name}
 				</Typography>
+				<Box className={classes.box} my={2}>
+					<Rating name='read-only' value={Number(place.rating)} readOnly />
+					<Typography component='legend'>
+						{place.num_reviews} review{place.num_reviews > 1 && "s"}
+					</Typography>
+				</Box>
 				<Box className={classes.box}>
-					<Typography variant='subtitle1'>Price</Typography>
+					<Typography component='legend'>Price</Typography>
 					<Typography gutterBottom variant='subtitle1'>
 						{place.price_level}
 					</Typography>
 				</Box>
 				<Box className={classes.box}>
-					<Typography variant='subtitle1'>Ranking</Typography>
+					<Typography component='legend'>Ranking</Typography>
 					<Typography gutterBottom variant='subtitle1'>
 						{place.ranking}
 					</Typography>
@@ -48,42 +56,39 @@ const PlaceDetails = ({ place }) => {
 				{place?.cuisine?.map(({ name }) => (
 					<Chip key={name} size='small' label={name} className={classes.chip} />
 				))}
-				{place?.address && (
+				{place.address && (
 					<Typography
 						gutterBottom
-						variant='subtitle2'
+						variant='body2'
 						color='textSecondary'
 						className={classes.subtitle}>
 						<LocationOnIcon />
 						{place.address}
 					</Typography>
 				)}
-				{place?.phone && (
+				{place.phone && (
 					<Typography
-						gutterBottom
-						variant='subtitle2'
+						variant='body2'
 						color='textSecondary'
 						className={classes.spacing}>
-						<PhoneIcon />
-						{place.phone}
+						<PhoneIcon /> {place.phone}
 					</Typography>
 				)}
-
-				<CardActions>
-					<Button
-						size='small'
-						color='primary'
-						onClick={() => window.open(place.web_url, "_blank")}>
-						Trip Advisor
-					</Button>
-					<Button
-						size='small'
-						color='primary'
-						onClick={() => window.open(place.website, "_blank")}>
-						Website
-					</Button>
-				</CardActions>
 			</CardContent>
+			<CardActions>
+				<Button
+					size='small'
+					color='primary'
+					onClick={() => window.open(place.web_url, "_blank")}>
+					Trip Advisor
+				</Button>
+				<Button
+					size='small'
+					color='primary'
+					onClick={() => window.open(place.website, "_blank")}>
+					Website
+				</Button>
+			</CardActions>
 		</Card>
 	)
 }
